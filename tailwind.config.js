@@ -1,11 +1,13 @@
-/* eslint-disable global-require */
-/* eslint-disable import/no-extraneous-dependencies */
-
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,jsx}'],
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/typography'),
-    require('@tailwindcss/line-clamp')
-  ]
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}'
+  ],
+  theme: {
+    extend: {}
+  },
+  plugins: []
 }
