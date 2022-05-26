@@ -1,9 +1,14 @@
 <template>
-  <NuxtLink to="/">Home page</NuxtLink>
+  <main>
+    <TheCards />
+  </main>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage'
+  name: 'IndexPage',
+  head: {
+    title: 'Frontend | Airtribe'
+  }
 }
 </script>
