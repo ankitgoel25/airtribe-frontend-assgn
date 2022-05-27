@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   content: [
     './components/**/*.{js,vue,ts}',
@@ -9,5 +11,29 @@ module.exports = {
   theme: {
     extend: {}
   },
-  plugins: []
+  plugins: [
+    plugin(({ addComponents }) => {
+      addComponents({
+        '.my-scrollbar': {
+          '&::-webkit-scrollbar': {
+            width: 8,
+            height: 8
+          },
+          '&::-webkit-scrollbar-track': {
+            background: 'transparent'
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#A9A9AC',
+            borderRadius: '9999px'
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: '#A9A9ACb0'
+          },
+          '&::-webkit-scrollbar-corner': {
+            display: 'none'
+          }
+        }
+      })
+    })
+  ]
 }
