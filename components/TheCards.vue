@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="px-20 my-8">
     <CardModal
       v-if="isModalOpen.card"
       :col-id="modalId"
@@ -10,14 +10,17 @@
       v-if="isModalOpen.status"
       :handle-modal="() => handleModal('status')"
     />
-    <button
-      type="button"
-      class="self-start px-6 py-2 bg-cyan-500 hover:bg-cyan-600 font-medium rounded text-white"
-      @click="() => handleModal('status')"
-    >
-      Add a new status
-    </button>
-    <div class="flex">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl font-semibold">Dashboard</h2>
+      <button
+        type="button"
+        class="self-start px-6 py-2 bg-cyan-500 hover:bg-cyan-600 font-medium rounded text-white"
+        @click="() => handleModal('status')"
+      >
+        Add a new status
+      </button>
+    </div>
+    <div class="flex w-full overflow-x-auto my-scrollbar pb-8">
       <Container
         orientation="horizontal"
         drag-handle-selector=".column-drag-handle"
@@ -27,16 +30,27 @@
         <Draggable v-for="column in list.children" :key="column.id">
           <div
             :class="column.props.className"
-            class="mx-5 w-[28vw] lg:w-[20vw] max-h-[90vh] overflow-auto my-scrollbar px-4"
+            class="w-[28vw] lg:w-[20vw] max-h-[65vh] overflow-auto my-scrollbar px-4 mr-6"
           >
-            <div class="py-1">
-              <span class="column-drag-handle cursor-move">&#x2630;</span>
-              <span :class="column.props.color" class="px-2 py-0.5 rounded">{{
-                column.name
-              }}</span>
-              <span class="text-sm text-gray-400 font-medium ml-3">{{
-                column.children.length
-              }}</span>
+            <div class="py-1 flex items-center justify-between">
+              <div class="flex items-center">
+                <span class="column-drag-handle cursor-move mr-2">
+                  &#x2630;
+                </span>
+                <span :class="column.props.color" class="px-2 py-0.5 rounded">{{
+                  column.name
+                }}</span>
+                <span class="text-sm text-gray-400 font-medium ml-4">{{
+                  column.children.length
+                }}</span>
+              </div>
+              <button
+                type="button"
+                class="w-8 h-8 text-gray-600 hover:text-black hover:bg-black/10 rounded-full flex items-center justify-center"
+                @click="() => deleteStatus(column.id)"
+              >
+                <fa :icon="['fas', 'trash']" />
+              </button>
             </div>
             <Container
               group-name="col"
@@ -46,14 +60,14 @@
               :drop-placeholder="dropPlaceholderOptions"
               @drop="(e) => onCardDrop(column.id, e)"
             >
-              <Draggable v-for="card in column.children" :key="card.id">
+              <Draggable v-for="card in column.children" :key="card.key">
                 <div
                   class="relative group px-4 py-3 border rounded my-2 border-black/[0.15] shadow bg-white cursor-default"
                 >
                   <div
                     class="absolute right-5 top-1.5 opacity-0 group-hover:opacity-80 transition"
                   >
-                    <NuxtLink to="/card/[id]">
+                    <NuxtLink :to="`/card/${column.id}/${card.key}`">
                       <button type="button">
                         <fa :icon="['fas', 'arrow-up-right-from-square']" />
                       </button>
@@ -61,11 +75,7 @@
                   </div>
                   <p>{{ card.title }}</p>
                   <p class="text-xs text-black/60 truncate">
-                    {{ card.description }} Lorem ipsum dolor sit amet
-                    consectetur adipisicing elit. Modi corporis quidem earum
-                    fuga commodi. Id, dolore accusamus quasi exercitationem
-                    fugit eius voluptas, laboriosam commodi distinctio,
-                    blanditiis doloribus neque et suscipit!
+                    {{ card.description }}
                   </p>
                 </div>
               </Draggable>
@@ -112,6 +122,10 @@ export default {
   },
   computed: {
     list() {
+      localStorage.setItem(
+        'list',
+        JSON.stringify(this.$store.state.status.list)
+      )
       return this.$store.state.status.list
     }
   },
@@ -126,7 +140,6 @@ export default {
         'status/newColumns',
         applyDrag(scene.children, dropResult)
       )
-      // localStorage.setItem('scene', scene)
     },
     onCardDrop(columnId, dropResult) {
       if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
@@ -139,7 +152,6 @@ export default {
           deleteCount: 1,
           item: newColumn
         })
-        // localStorage.setItem('scene', scene)}
       }
     },
     getCardPayload(columnId) {
@@ -148,10 +160,10 @@ export default {
           index
         ]
       }
+    },
+    deleteStatus(colId) {
+      this.$store.commit('status/deleteColumn', colId)
     }
-    // addStatus() {
-
-    // }
   }
 }
 </script>

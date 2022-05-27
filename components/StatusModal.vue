@@ -68,7 +68,7 @@ export default {
       selectedColor: 0,
       styles: {
         inputBox: 'flex flex-col',
-        input: 'text-base py-2 px-3 rounded border mt-1 outline-none',
+        input: 'text-base py-2 px-3 rounded border mt-1',
         label: 'text-sm'
       },
       cardColors
@@ -77,6 +77,7 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault()
+      if (this.title === '') return
       this.$store.commit('status/addColumn', {
         name: this.title,
         color: cardColors[this.selectedColor].color
