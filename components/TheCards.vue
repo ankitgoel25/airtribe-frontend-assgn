@@ -8,6 +8,7 @@
     />
     <StatusModal
       v-if="isModalOpen.status"
+      :col-id="modalId"
       :handle-modal="() => handleModal('status')"
     />
     <div class="flex items-center justify-between mb-6">
@@ -46,13 +47,22 @@
                   column.children.length
                 }}</span>
               </div>
-              <button
-                type="button"
-                class="w-8 h-8 text-gray-600 hover:text-black hover:bg-black/10 rounded-full flex items-center justify-center"
-                @click="() => deleteStatus(column.id)"
-              >
-                <fa :icon="['fas', 'trash']" />
-              </button>
+              <div class="flex items-center space-x-1">
+                <button
+                  type="button"
+                  class="w-8 h-8 text-gray-600 hover:text-black hover:bg-black/10 rounded-full flex items-center justify-center"
+                  @click="() => handleModal('status', column.id)"
+                >
+                  <fa :icon="['fas', 'pen']" />
+                </button>
+                <button
+                  type="button"
+                  class="w-8 h-8 text-gray-600 hover:text-black hover:bg-black/10 rounded-full flex items-center justify-center"
+                  @click="() => deleteStatus(column.id)"
+                >
+                  <fa :icon="['fas', 'trash']" />
+                </button>
+              </div>
             </div>
             <Container
               group-name="col"

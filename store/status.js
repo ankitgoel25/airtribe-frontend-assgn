@@ -72,6 +72,12 @@ export const mutations = {
     })
     localStorage.setItem('list', JSON.stringify(state.list))
   },
+  editColumn(state, col) {
+    const column = state.list.children.find((c) => c.id === col.colId)
+    column.name = col.name
+    column.props.color = col.color
+    localStorage.setItem('list', JSON.stringify(state.list))
+  },
   updateCard(state, data) {
     const { cardKey, oldColId, colId, title, desc } = data
     let prevIndex

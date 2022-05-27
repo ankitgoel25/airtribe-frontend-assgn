@@ -45,7 +45,7 @@
           type="submit"
           class="self-start px-6 py-2 bg-cyan-500 hover:bg-cyan-600 font-medium rounded text-white"
         >
-          Create
+          {{ colId ? 'Update' : 'Create' }}
         </button>
       </form>
     </div>
@@ -61,28 +61,60 @@ export default {
     handleModal: {
       type: Function,
       default: () => {}
+    },
+    colId: {
+      type: [String, Number],
+      default: null
     }
   },
   data() {
     return {
-      title: '',
-      selectedColor: 0,
       styles: {
         inputBox: 'flex flex-col',
         input: 'text-base py-2 px-3 rounded border mt-1',
         label: 'text-sm'
       },
+      title:
+        this.colId !== null
+          ? this.$store.state.status.list.children.find(
+              (c) => c.id === this.colId
+            ).name
+          : '',
+      selectedColor:
+        this.colId !== null
+          ? cardColors.find(
+              (c) =>
+                c.color ===
+                this.$store.state.status.list.children.find(
+                  (c) => c.id === this.colId
+                ).props.color
+            ).id
+          : 0,
       cardColors
+    }
+  },
+  computed: {
+    list() {
+      console.log(this.colId)
+      return null
     }
   },
   methods: {
     handleSubmit(e) {
       e.preventDefault()
       if (this.title === '') return
-      this.$store.commit('status/addColumn', {
-        name: this.title,
-        color: cardColors[this.selectedColor].color
-      })
+      if (this.colId !== null) {
+        this.$store.commit('status/editColumn', {
+          colId: this.colId,
+          name: this.title,
+          color: cardColors[this.selectedColor].color
+        })
+      } else {
+        this.$store.commit('status/addColumn', {
+          name: this.title,
+          color: cardColors[this.selectedColor].color
+        })
+      }
       this.handleModal()
     }
   }
