@@ -28,13 +28,14 @@
           <select
             id="color"
             v-model="selectedColor"
-            :class="`${styles.input} ${cardColors[selectedColor].color}`"
+            :class="`${styles.input}`"
+            :style="{ backgroundColor: cardColors[selectedColor].color }"
           >
             <option
               v-for="color in cardColors"
               :key="color.id"
               :value="color.id"
-              :class="`${color.color}`"
+              :style="{ backgroundColor: color.color }"
             >
               {{ color.name }}
             </option>

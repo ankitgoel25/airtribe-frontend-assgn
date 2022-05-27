@@ -91,6 +91,7 @@ export default {
   methods: {
     handleSubmit(e) {
       e.preventDefault()
+      if (this.title === '' || this.desc === '') return
       this.$store.commit('status/addCard', {
         title: this.title,
         desc: this.desc,

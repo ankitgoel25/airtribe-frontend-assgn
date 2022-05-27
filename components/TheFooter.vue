@@ -13,24 +13,30 @@
       </a>
     </div>
     <div class="flex items-center space-x-8">
-      <button type="button" :class="styles.link" @click="clearStorage">
+      <button type="button" :class="styles.clear" @click="clearStorage">
         Clear Local Storage
       </button>
-      <span :class="styles.icon">
-        <a href="https://www.linkedin.com/in/ankitgoel25/" target="_blank">
-          <fa :icon="['fab', 'linkedin']" />
-        </a>
-      </span>
-      <span :class="styles.icon">
-        <a href="https://twitter.com/ankitgoel_25" target="_blank">
-          <fa :icon="['fab', 'twitter']" />
-        </a>
-      </span>
-      <span :class="styles.icon">
-        <a href="https://linktr.ee/AnkitGoel" target="_blank">
-          <fa :icon="['fas', 'tree']" />
-        </a>
-      </span>
+      <a
+        href="https://www.linkedin.com/in/ankitgoel25/"
+        target="_blank"
+        :class="styles.icon"
+      >
+        <fa :icon="['fab', 'linkedin']" />
+      </a>
+      <a
+        href="https://twitter.com/ankitgoel_25"
+        target="_blank"
+        :class="styles.icon"
+      >
+        <fa :icon="['fab', 'twitter']" />
+      </a>
+      <a
+        href="https://linktr.ee/AnkitGoel"
+        target="_blank"
+        :class="styles.icon"
+      >
+        <fa :icon="['fas', 'tree']" />
+      </a>
     </div>
   </footer>
 </template>
@@ -41,7 +47,8 @@ export default {
   data() {
     return {
       styles: {
-        link: 'py-2 px-4 rounded hover:bg-black/10 text-base ml-4 cursor-pointer',
+        clear:
+          'py-2 px-4 rounded bg-black/5 hover:bg-black/10 text-base ml-4 cursor-pointer',
         icon: 'w-10 h-10 flex items-center justify-center hover:bg-black/10 rounded-full text-xl cursor-pointer'
       }
     }

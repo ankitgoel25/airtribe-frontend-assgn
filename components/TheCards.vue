@@ -37,9 +37,11 @@
                 <span class="column-drag-handle cursor-move mr-2">
                   &#x2630;
                 </span>
-                <span :class="column.props.color" class="px-2 py-0.5 rounded">{{
-                  column.name
-                }}</span>
+                <span
+                  class="px-2 py-0.5 rounded"
+                  :style="{ backgroundColor: column.props.color }"
+                  >{{ column.name }}</span
+                >
                 <span class="text-sm text-gray-400 font-medium ml-4">{{
                   column.children.length
                 }}</span>
